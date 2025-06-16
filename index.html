@@ -30,6 +30,10 @@
       font-size: 1.5em;
       margin-top: 5px;
     }
+    .books {
+      font-size: 1.2em;
+      margin-top: 5px;
+    }
     .podium {
       margin-top: 30px;
       font-size: 1.2em;
@@ -44,6 +48,12 @@
       margin-top: 10px;
       padding: 5px 10px;
       font-size: 1em;
+    }
+    #endRoundBtn {
+      margin-top: 20px;
+      font-weight: bold;
+      background: #444;
+      border: 2px solid #888;
     }
   </style>
 </head>
@@ -86,9 +96,11 @@
       players.forEach((p, i) => {
         const div = document.createElement('div');
         div.className = 'player';
+        const books = Math.floor(p.score / 50);
         div.innerHTML = `
           <strong>${p.name}</strong> (${p.score})<br>
           <div class="score-visual">${p.visual}</div>
+          <div class="books">Books: ${'📘'.repeat(books)}</div>
           <input id="score-${i}" type="number" step="5" min="5" max="50">
           <button onclick="addScore(${i})">Add</button>
         `;
@@ -98,6 +110,14 @@
       undoBtn.textContent = 'Undo Last Score';
       undoBtn.onclick = undoLast;
       board.appendChild(undoBtn);
+
+      if (players.some(p => p.score >= maxScore)) {
+        const endBtn = document.createElement('button');
+        endBtn.id = 'endRoundBtn';
+        endBtn.textContent = 'End Game?';
+        endBtn.onclick = confirmEndGame;
+        board.appendChild(endBtn);
+      }
     }
 
     function addScore(index) {
@@ -110,11 +130,7 @@
       players[index].visual += getScoreVisual(value);
       input.value = '';
 
-      if (players[index].score >= maxScore) {
-        showPodium();
-      } else {
-        render();
-      }
+      render();
     }
 
     function getScoreVisual(score) {
@@ -137,6 +153,12 @@
       players[last.index].score -= last.value;
       players[last.index].visual = players[last.index].visual.slice(0, -getScoreVisual(last.value).length);
       render();
+    }
+
+    function confirmEndGame() {
+      if (confirm('Are you ready to end the game?')) {
+        showPodium();
+      }
     }
 
     function showPodium() {
