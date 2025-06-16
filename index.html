@@ -60,7 +60,7 @@
 <body>
   <h1>Sevens to Betsy 🁢</h1>
   <div>
-    <label>Players: <input id="numPlayers" type="number" min="2" max="4" value="4"></label>
+    <label>Players: <input id="numPlayers" type="number" min="2" max="4" value="2"></label>
     <label>Max Score:
       <select id="maxScore">
         <option value="150">150</option>
@@ -134,24 +134,25 @@
     }
 
     function getScoreVisual(score) {
-      let str = '';
+      let visual = '';
       let remaining = score;
       while (remaining >= 10) {
-        str += 'X';
+        visual += 'X';
         remaining -= 10;
       }
       while (remaining >= 5) {
-        str += '/';
+        visual += '/';
         remaining -= 5;
       }
-      return str;
+      // Add commas and spaces between every 5 characters
+      return visual.match(/.{1,5}/g)?.join(', ') || visual;
     }
 
     function undoLast() {
       const last = history.pop();
       if (!last) return;
       players[last.index].score -= last.value;
-      players[last.index].visual = players[last.index].visual.slice(0, -getScoreVisual(last.value).length);
+      players[last.index].visual = players[last.index].visual.slice(0, -getScoreVisual(last.value).length - (players[last.index].visual.endsWith(', ') ? 2 : 0));
       render();
     }
 
