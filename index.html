@@ -182,6 +182,27 @@
         div.textContent = `${place} ${p.name} - ${p.score} points`;
         board.appendChild(div);
       });
+
+      const restartText = document.createElement('p');
+      restartText.textContent = 'Start a new game?';
+      restartText.style.marginTop = '30px';
+      board.appendChild(restartText);
+
+      const samePlayersBtn = document.createElement('button');
+      samePlayersBtn.textContent = 'Same Players';
+      samePlayersBtn.onclick = () => {
+        players.forEach(p => { p.score = 0; p.visual = ''; });
+        history = [];
+        render();
+      };
+      board.appendChild(samePlayersBtn);
+
+      const newPlayersBtn = document.createElement('button');
+      newPlayersBtn.textContent = 'New Players';
+      newPlayersBtn.onclick = startGame;
+      board.appendChild(newPlayersBtn);
+    }
+      });
     }
   </script>
 </body>
