@@ -1,44 +1,45 @@
-# Sevens to Betsy 🁢
+**Sevens to Betsy** is a chalkboard-style web scorecard for a beloved domino-style game played at Khon's bar in honor of the late Betsy. Track scores, count books, and settle up with a podium finish—now with offline support thanks to PWA magic.
 
-**Sevens to Betsy** is a scorekeeping web app for a classic domino-style game played at Khon's bar in honor of the late and legendary Betsy. Players add scores in multiples of 5, earning books (📘) every 50 points, with a vintage chalkboard style interface and a touch of Betsy's spirit in every round.
+## 🎮 Features
 
-## 🎲 How to Play
-
-- 2 to 4 players
-- Choose a game limit: **150**, **200**, or **250**
-- Enter each player's score in multiples of 5 (e.g., 5, 10, 15…)
-- The app visually tracks score progress with:
-  - `/` = 5 points
-  - `X` = 10 points
-  - `📘` = 50-point book
-- When the score limit is reached, the round continues until all players finish
-- Tap **End Game?** to view the final podium
-
-## ✅ Features
-
+- 2–4 player support
+- Manual score entry in multiples of 5 only
+- Visual tracker using `/` (5) and `X` (10)
+- Books tracked every 50 points (📘)
+- Undo last score
+- Podium-style results screen
 - Custom player names
-- Manual score entry with validation
-- Visual score markers with commas for clarity
-- Book tracker using 📘 icons
-- Undo last score button
-- Podium results with medals
-- Chalkboard bar-style aesthetic
-- Betsy-themed app logo for ultimate vibes
+- Chalkboard theme with Betsy logo
+- **Progressive Web App (PWA)** ready – installable on mobile or desktop!
 
-## 🧱 Built With
+## 🛠️ Tech Stack
 
-- HTML, CSS, and JavaScript
-- No external libraries
-- Fully offline-capable (optional PWA version coming soon)
+- Vanilla HTML, CSS, and JavaScript
+- Offline support via `service-worker.js`
+- Installable via `manifest.json`
 
-## 📦 How to Use
+## 🧾 How to Use
 
-Just open `sevens-to-betsy.html` in any modern web browser.  
-No installation required.
+1. Open `index.html` in your browser
+2. Enter number of players (2–4) and max score (150/200/250)
+3. Input player names and start entering scores
+4. When a player reaches the limit, press **End Game?** to view final results
 
-## 👑 In Memory Of
+## 📱 PWA Setup
 
-Dedicated to Betsy — queen of the bar, champion of games, and always good for a laugh.
+Make sure you include:
+- `index.html`
+- `manifest.json`
+- `service-worker.js`
+- `72Blogo.png`
+- `icon-192.png`
+- `icon-512.png`
+
+Once hosted (e.g. on GitHub Pages), the app can be installed to your home screen for offline play.
+
+## 🫶 In Honor Of
+
+Created in loving tribute to Betsy—Khon’s legend, friend to many, and a true original.
 
 ---
 
