@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sevens to Betsy</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1b1b1b">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Registration Failed:', err));
+    }
+  </script>
   <style>
     body {
       background: #1b1b1b;
@@ -11,10 +21,6 @@
       font-family: 'Courier New', Courier, monospace;
       text-align: center;
       padding: 20px;
-    }
-    h1 {
-      font-size: 2em;
-      margin-bottom: 10px;
     }
     .logo {
       max-width: 300px;
@@ -63,7 +69,6 @@
 </head>
 <body>
   <img src="72Blogo.png" alt="Sevens to Betsy Logo" class="logo">
-  
   <div>
     <label>Players: <input id="numPlayers" type="number" min="2" max="4" value="2"></label>
     <label>Max Score:
@@ -149,7 +154,6 @@
         visual += '/';
         remaining -= 5;
       }
-      // Add commas and spaces between every 5 characters
       return visual.match(/.{1,5}/g)?.join(', ') || visual;
     }
 
