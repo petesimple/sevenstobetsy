@@ -172,14 +172,17 @@
     }
 
     function showPodium() {
+      // Update win stats
+      if (!players[0].wins) players.forEach(p => p.wins = 0);
       players.sort((a, b) => b.score - a.score);
+      players[0].wins++;
       const board = document.getElementById('gameBoard');
       board.innerHTML = '<h2>🏆 Final Standings 🏆</h2>';
       players.forEach((p, i) => {
         const place = ['🥇', '🥈', '🥉', '🎖️'][i] || '🎖️';
         const div = document.createElement('div');
         div.className = 'podium';
-        div.textContent = `${place} ${p.name} - ${p.score} points`;
+        div.textContent = `${place} ${p.name} - ${p.score} points (${p.wins || 0} wins)`;
         board.appendChild(div);
       });
 
@@ -191,7 +194,11 @@
       const samePlayersBtn = document.createElement('button');
       samePlayersBtn.textContent = 'Same Players';
       samePlayersBtn.onclick = () => {
-        players.forEach(p => { p.score = 0; p.visual = ''; });
+        players.forEach(p => {
+          p.score = 0;
+          p.visual = '';
+          p.wins = (p.wins || 0);
+        });
         history = [];
         render();
       };
@@ -199,7 +206,11 @@
 
       const newPlayersBtn = document.createElement('button');
       newPlayersBtn.textContent = 'New Players';
-      newPlayersBtn.onclick = startGame;
+      newPlayersBtn.onclick = () => {
+        document.getElementById('numPlayers').value = players.length;
+        document.getElementById('maxScore').value = maxScore;
+        window.location.reload();
+      };
       board.appendChild(newPlayersBtn);
     }
       });
