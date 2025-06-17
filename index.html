@@ -74,7 +74,7 @@
 </head>
 <body>
   <img src="./72Blogo.png" alt="Sevens to Betsy Logo" class="logo">
-  <div>
+  <div id="setupArea">
     <label>Players: <input id="numPlayers" type="number" min="2" max="4" value="2"></label>
     <label>Max Score:
       <select id="maxScore">
@@ -92,6 +92,7 @@
     let maxScore = 150;
 
     function startGame() {
+      document.getElementById('setupArea').style.display = 'none';
       const count = parseInt(document.getElementById('numPlayers').value);
       maxScore = parseInt(document.getElementById('maxScore').value);
       players = [];
@@ -215,10 +216,11 @@
       const newPlayersBtn = document.createElement('button');
       newPlayersBtn.textContent = 'New Players';
       newPlayersBtn.onclick = () => {
-        document.getElementById('numPlayers').value = players.length;
-        document.getElementById('maxScore').value = maxScore;
-        window.location.reload();
-      };
+      document.getElementById('setupArea').style.display = 'block';
+      document.getElementById('gameBoard').innerHTML = '';
+        players = [];
+        history = [];
+};
       board.appendChild(newPlayersBtn);
     }
   </script>
