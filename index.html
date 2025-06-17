@@ -113,12 +113,14 @@
         div.className = 'player';
         const books = Math.floor(p.score / 50);
         div.innerHTML = `
-          <strong>${p.name}</strong> (${p.score})<br>
-          <div class="score-visual">${p.visual}</div>
-          <div class="books">Books: ${'📘'.repeat(books)}</div>
-          <input id="score-${i}" type="number" step="5" min="5" max="50">
-          <button onclick="addScore(${i})">Add</button>
-        `;
+  <strong>${p.name}</strong> (${p.score})<br>
+  <div class="score-visual">${p.visual}</div>
+  <div class="books">Books: ${'📘'.repeat(books)}</div>
+  <input id="score-${i}" type="number" step="5" min="5" max="50">
+  <button onclick="addScore(${i})">Add</button>
+  <button onclick="addScore(${i}, 5)">+5</button>
+  <button onclick="addScore(${i}, 10)">+10</button>
+`;
         board.appendChild(div);
       });
       const undoBtn = document.createElement('button');
@@ -135,16 +137,16 @@
       }
     }
 
-    function addScore(index) {
-      const input = document.getElementById(`score-${index}`);
-      const value = parseInt(input.value);
-      if (!value || value % 5 !== 0) return alert('Score must be in multiples of 5.');
-      history.push({ index, value });
-      players[index].score += value;
-      players[index].visual += getScoreVisual(value);
-      input.value = '';
-      render();
-    }
+    function addScore(index, value = null) {
+  const input = document.getElementById(`score-${index}`);
+  const enteredValue = value !== null ? value : parseInt(input.value);
+  if (!enteredValue || enteredValue % 5 !== 0) return alert('Score must be in multiples of 5.');
+  history.push({ index, value: enteredValue });
+  players[index].score += enteredValue;
+  players[index].visual += getScoreVisual(enteredValue);
+  if (input) input.value = '';
+  render();
+}
 
     function getScoreVisual(score) {
       let visual = '';
