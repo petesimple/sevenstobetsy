@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sevens to Betsy</title>
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#1b1b1b">
-  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
+      navigator.serviceWorker.register('./service-worker.js')
         .then(reg => console.log('Service Worker Registered'))
         .catch(err => console.error('Service Worker Registration Failed:', err));
     }
@@ -55,7 +55,7 @@
       width: 120px;
     }
     button {
-      margin-top: 10px;
+      margin: 10px 5px 0;
       padding: 5px 10px;
       font-size: 1em;
     }
@@ -68,7 +68,7 @@
   </style>
 </head>
 <body>
-  <img src="72Blogo.png" alt="Sevens to Betsy Logo" class="logo">
+  <img src="./72Blogo.png" alt="Sevens to Betsy Logo" class="logo">
   <div>
     <label>Players: <input id="numPlayers" type="number" min="2" max="4" value="2"></label>
     <label>Max Score:
@@ -95,7 +95,7 @@
       board.innerHTML = '';
       for (let i = 0; i < count; i++) {
         const name = prompt(`Enter name for Player ${i + 1}:`, `Player ${i + 1}`);
-        players.push({ name, score: 0, visual: '' });
+        players.push({ name, score: 0, visual: '', wins: 0 });
       }
       render();
     }
@@ -134,12 +134,10 @@
       const input = document.getElementById(`score-${index}`);
       const value = parseInt(input.value);
       if (!value || value % 5 !== 0) return alert('Score must be in multiples of 5.');
-
       history.push({ index, value });
       players[index].score += value;
       players[index].visual += getScoreVisual(value);
       input.value = '';
-
       render();
     }
 
@@ -161,7 +159,11 @@
       const last = history.pop();
       if (!last) return;
       players[last.index].score -= last.value;
-      players[last.index].visual = players[last.index].visual.slice(0, -getScoreVisual(last.value).length - (players[last.index].visual.endsWith(', ') ? 2 : 0));
+      const visualToRemove = getScoreVisual(last.value);
+      let currentVisual = players[last.index].visual;
+      let visualChunks = currentVisual.split(', ');
+      visualChunks.splice(-Math.ceil(visualToRemove.length / 5), 1);
+      players[last.index].visual = visualChunks.join(', ');
       render();
     }
 
@@ -172,7 +174,6 @@
     }
 
     function showPodium() {
-      // Update win stats
       if (!players[0].wins) players.forEach(p => p.wins = 0);
       players.sort((a, b) => b.score - a.score);
       players[0].wins++;
@@ -212,8 +213,6 @@
         window.location.reload();
       };
       board.appendChild(newPlayersBtn);
-    }
-      });
     }
   </script>
 </body>
